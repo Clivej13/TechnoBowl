@@ -1,0 +1,17 @@
+{
+  "menu_name": "Pause Menu",
+  "menu_items": [
+    {
+      "menu_item_data": "Resume Game",
+      "menu_item_type": "Button"
+    },
+    {
+      "menu_item_data": "Save Game",
+      "menu_item_type": "Button"
+    },
+    {
+      "menu_item_data": "Main Menu",
+      "menu_item_type": "Button"
+    }
+  ]
+}

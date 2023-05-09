@@ -1,0 +1,17 @@
+{
+  "menu_name": "Create Team Menu",
+  "menu_items": [
+    {
+      "menu_item_data": "Load",
+      "menu_item_type": "Button"
+    },
+    {
+      "menu_item_data": "Delete",
+      "menu_item_type": "Button"
+    },
+    {
+      "menu_item_data": "Done",
+      "menu_item_type": "Button"
+    }
+  ]
+}

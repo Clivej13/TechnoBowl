@@ -5,17 +5,16 @@ from sprite import Sprite
 
 
 class DisplayBox:
-    def __init__(self, rect, text, font, menu_name):
+    def __init__(self, rect, data, menu_name):
         self.logger = Logger()
         self.menu_name = menu_name
-        self.font = font
         self.rect = rect
-        self.text = text
+        self.data = data
         self.active = False
         self.color = (255, 255, 255)
-        self.sprite = Sprite(self.rect.x + (self.rect.w / 4), self.rect.y, self.text[2], self.text[3], self.text[4], 4,
+        self.sprite = Sprite(self.rect.x + (self.rect.w / 4), self.rect.y, self.data["menu_item_data"], self.data["frame_width"], self.data["frame_height"], self.data["number_of_frames"],
                              False, 6, False)
-        self.sprite.scale(self.text[5])
+        self.sprite.scale(self.data["scale_factor"])
 
     def draw(self, surface):
         pygame.draw.rect(surface, self.color, self.rect)
