@@ -4,7 +4,7 @@ import sys
 
 from game import Game
 from logger import Logger
-from menu import Menu
+from menu.menu import Menu
 from save import SaveGame
 
 
@@ -68,7 +68,7 @@ def main(self=None):
                     load_team_menu = load_team_data.load_all()
                     teams = created_teams_data.load_all()
                     for team in teams:
-                        load_team_menu["menu_items"].append(
+                        load_team_menu["menu-items"].append(
                             {"menu_item_data": team["Team Name"], "menu_item_type": "button", "id": team["id"]})
                     load_team = Menu(screen, background_image, load_team_menu)
                     current_state = load_team
@@ -86,7 +86,7 @@ def main(self=None):
                     data = created_teams_data.load_item_from_list(current_state_output[3])
                     logger.log(str(data))
                     create_team_data = create_a_team_menu_data.load_all()
-                    for menu_item in create_team_data["menu_items"]:
+                    for menu_item in create_team_data["menu-items"]:
                         if menu_item["menu_item_data"] == "Team Name":
                             menu_item["menu_item_value"] = data["Team Name"]
                         if menu_item["menu_item_data"] == "Team Location":
