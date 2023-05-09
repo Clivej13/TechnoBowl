@@ -1,10 +1,9 @@
 import pygame
 
-import logger
-from button import Button
-from input_box import InputBox
+from menu_items.button import Button
+from menu_items.input_box import InputBox
 from logger import Logger
-from display_box import DisplayBox
+from menu_items.display_box import DisplayBox
 
 
 class Menu:

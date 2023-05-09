@@ -20,13 +20,13 @@ def main(self=None):
 
     # load background image
     background_image = pygame.image.load("images/background.png").convert()
-    created_teams_data = SaveGame('created_teams_data.json')
-    create_a_team_menu_data = SaveGame('new_team.json')
-    create_team_menu_data = SaveGame('create_team_menu.json')
+    created_teams_data = SaveGame('saved_data/created_teams_data.json')
+    create_a_team_menu_data = SaveGame('menu/menu_jsons/new_team.json')
+    create_team_menu_data = SaveGame('menu/menu_jsons/create_team_menu.json')
     load_team_data = SaveGame('load_team_menu')
-    delete_team_menu_data = SaveGame('delete_team_menu.json')
-    main_menu_data = SaveGame('main_menu.json')
-    pause_menu_data = SaveGame('pause_menu.json')
+    delete_team_menu_data = SaveGame('menu/menu_jsons/delete_team_menu.json')
+    main_menu_data = SaveGame('menu/menu_jsons/main_menu.json')
+    pause_menu_data = SaveGame('menu/menu_jsons/pause_menu.json')
 
     # main game loop
     # create instances of the menu and game classes
