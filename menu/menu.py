@@ -26,13 +26,24 @@ class Menu:
             if "width" in menu_item_data:
                 if menu_item_data["width"] > menu_item_width:
                     menu_item_width = menu_item_data["width"]
+            else:
+                text_width, text_height = self.font.size(menu_item_data["menu_item_data"])
+                if int(text_width) > menu_item_width:
+                    menu_item_width = int(text_width) + (menu_item_spacing * 2)
 
         for i, menu_item_data in enumerate(self.data["menu_items"]):
-            menu_item_rect = pygame.Rect(0, 0, menu_item_width, menu_item_height)
-            menu_item_rect.center = self.menu_rect.center
-            menu_item_rect.y += (i * (menu_item_height + menu_item_spacing)) - (
-                    ((menu_item_height + menu_item_spacing) * len(menu_item_data) - (
-                            menu_item_height + menu_item_spacing)) / 2)
+            if "height" in menu_item_data:
+                menu_item_rect = pygame.Rect(0, 0, menu_item_width, menu_item_data["height"])
+                menu_item_rect.center = self.menu_rect.center
+                menu_item_rect.y += (i * (menu_item_data["height"] + menu_item_spacing)) - (
+                        ((menu_item_data["height"] + menu_item_spacing) * len(menu_item_data) - (
+                                menu_item_data["height"] + menu_item_spacing)) / 2)
+            else:
+                menu_item_rect = pygame.Rect(0, 0, menu_item_width, menu_item_height)
+                menu_item_rect.center = self.menu_rect.center
+                menu_item_rect.y += (i * (menu_item_height + menu_item_spacing)) - (
+                        ((menu_item_height + menu_item_spacing) * len(menu_item_data) - (
+                                menu_item_height + menu_item_spacing)) / 2)
             if menu_item_data["menu_item_type"] == "Button":
                 button = Button(menu_item_rect, menu_item_data, self.font, data["menu_name"])
                 self.menu_items_list.append(button)
@@ -40,8 +51,10 @@ class Menu:
                 input_box = InputBox(menu_item_rect, menu_item_data, self.font, data["menu_name"])
                 self.menu_items_list.append(input_box)
             if menu_item_data["menu_item_type"] == "Display Box":
+                menu_item_rect.y = menu_item_rect.y + menu_item_rect.height / 2
                 display_box = DisplayBox(menu_item_rect, menu_item_data, data["menu_name"])
                 self.menu_items_list.append(display_box)
+
 
     def draw(self):
         self.screen.blit(self.background_image, (0, 0))
