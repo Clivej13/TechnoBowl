@@ -11,10 +11,8 @@ class Menu:
         self.screen = screen
         self.background_image = background_image
         self.data = data
-        self.menu_surface = pygame.Surface((400, 400))
-        self.menu_surface.set_alpha(200)
-        self.menu_surface.fill((0, 0, 0))
-        self.menu_rect = self.menu_surface.get_rect()
+        self.menu_surface_height = 0
+        self.menu_rect = pygame.Rect(0, 0, 400, self.menu_surface_height)
         self.font = pygame.font.SysFont(None, 50)
         menu_item_spacing = 20
         menu_item_height = 50
@@ -34,16 +32,20 @@ class Menu:
         for i, menu_item_data in enumerate(self.data["menu_items"]):
             if "height" in menu_item_data:
                 menu_item_rect = pygame.Rect(0, 0, menu_item_width, menu_item_data["height"])
-                menu_item_rect.center = self.menu_rect.center
+                menu_item_rect.center = screen.get_rect().center
                 menu_item_rect.y += (i * (menu_item_data["height"] + menu_item_spacing)) - (
                         ((menu_item_data["height"] + menu_item_spacing) * len(menu_item_data) - (
                                 menu_item_data["height"] + menu_item_spacing)) / 2)
             else:
                 menu_item_rect = pygame.Rect(0, 0, menu_item_width, menu_item_height)
-                menu_item_rect.center = self.menu_rect.center
+                menu_item_rect.center = screen.get_rect().center
                 menu_item_rect.y += (i * (menu_item_height + menu_item_spacing)) - (
                         ((menu_item_height + menu_item_spacing) * len(menu_item_data) - (
                                 menu_item_height + menu_item_spacing)) / 2)
+            menu_item_data["menu_item_rect"] = menu_item_rect
+
+        for menu_item_data in self.data["menu_items"]:
+            menu_item_rect = menu_item_data["menu_item_rect"]
             if menu_item_data["menu_item_type"] == "Button":
                 button = Button(menu_item_rect, menu_item_data, self.font, data["menu_name"])
                 self.menu_items_list.append(button)
@@ -54,7 +56,15 @@ class Menu:
                 menu_item_rect.y = menu_item_rect.y + menu_item_rect.height / 2
                 display_box = DisplayBox(menu_item_rect, menu_item_data, data["menu_name"])
                 self.menu_items_list.append(display_box)
-
+            self.menu_surface_height += (menu_item_rect.height + menu_item_spacing)
+            self.logger.log(self.data["menu_name"] + " - self.menu_surface_height: " + str(self.menu_surface_height))
+        self.menu_rect.height = self.menu_surface_height
+        self.menu_rect.width = menu_item_width
+        self.menu_rect.center = screen.get_rect().center
+        self.logger.log(self.data["menu_name"] + " - self.menu_rect: " + str(self.menu_rect))
+        self.menu_surface = pygame.Surface((self.menu_rect.width, self.menu_rect.height))
+        self.menu_surface.set_alpha(200)
+        self.menu_surface.fill((0, 0, 0))
 
     def draw(self):
         self.screen.blit(self.background_image, (0, 0))

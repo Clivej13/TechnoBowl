@@ -19,7 +19,7 @@ class SaveGame:
         list_obj = []
         with open(self.filename) as fp:
             list_obj = json.load(fp)
-        list_obj.append_item_to_list(value)
+        list_obj.append(value)
         with open(self.filename, 'w') as json_file:
             json.dump(list_obj, json_file,
                       indent=4,

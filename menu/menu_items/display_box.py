@@ -12,7 +12,8 @@ class DisplayBox:
         self.data = data
         self.active = False
         self.color = (255, 255, 255)
-        self.sprite = Sprite(self.rect.x, self.rect.y, self.data["menu_item_data"], self.data["frame_width"], self.data["frame_height"], self.data["number_of_frames"],
+        xbuffer = (self.rect.width - self.data["frame_width"])/4
+        self.sprite = Sprite(self.rect.x + xbuffer, self.rect.y, self.data["menu_item_data"], self.data["frame_width"], self.data["frame_height"], self.data["number_of_frames"],
                              False, 6, False)
         self.sprite.scale(self.data["scale_factor"])
 

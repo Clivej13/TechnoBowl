@@ -16,14 +16,14 @@ def main(self=None):
     # create a screen
     # screen = pygame.display.set_mode((1280, 720), pygame.FULLSCREEN)
     screen = pygame.display.set_mode((1280, 720))
+    # screen = pygame.display.set_mode((1920, 1080))
     pygame.display.set_caption("My Game")
 
     # load background image
     background_image = pygame.image.load("images/background.png").convert()
-    created_teams_data = SaveGame('saved_data/created_teams_data.json')
     create_a_team_menu_data = SaveGame('menu/menu_jsons/new_team.json')
     create_team_menu_data = SaveGame('menu/menu_jsons/create_team_menu.json')
-    load_team_data = SaveGame('load_team_menu')
+    load_team_data = SaveGame('menu/menu_jsons/load_team_menu.json')
     delete_team_menu_data = SaveGame('menu/menu_jsons/delete_team_menu.json')
     main_menu_data = SaveGame('menu/menu_jsons/main_menu.json')
     pause_menu_data = SaveGame('menu/menu_jsons/pause_menu.json')
@@ -66,10 +66,10 @@ def main(self=None):
                     current_state = create_team
                 elif current_state_output[0] == "Load Team" and current_state_output[1] == "Create Team":
                     load_team_menu = load_team_data.load_all()
+                    created_teams_data = SaveGame('saved_data/created_teams_data.json')
                     teams = created_teams_data.load_all()
                     for team in teams:
-                        load_team_menu["menu-items"].append(
-                            {"menu_item_data": team["Team Name"], "menu_item_type": "button", "id": team["id"]})
+                        load_team_menu["menu-items"].append(team)
                     load_team = Menu(screen, background_image, load_team_menu)
                     current_state = load_team
                 elif current_state_output[0] != "Done" and current_state_output[1] == "Load Team":
@@ -80,9 +80,11 @@ def main(self=None):
                 elif current_state_output[0] == "Done" and current_state_output[1] == "Delete Team":
                     current_state = load_team
                 elif current_state_output[0] == "Delete" and current_state_output[1] == "Delete Team":
+                    created_teams_data = SaveGame('saved_data/created_teams_data.json')
                     created_teams_data.delete_item_from_list(current_state_output[3])
                     current_state = create_team_menu
                 elif current_state_output[0] == "Load" and current_state_output[1] == "Delete Team":
+                    created_teams_data = SaveGame('saved_data/created_teams_data.json')
                     data = created_teams_data.load_item_from_list(current_state_output[3])
                     logger.log(str(data))
                     create_team_data = create_a_team_menu_data.load_all()
@@ -96,19 +98,23 @@ def main(self=None):
                         if menu_item["menu_item_data"] == "Secondary Color":
                             menu_item["menu_item_value"] == data["Secondary_Color"]
                     create_team = Menu(screen, background_image, create_team_data)
-                    #created_teams_data.delete_item_from_list(current_state_output[0][3])
+                    # created_teams_data.delete_item_from_list(current_state_output[0][3])
                     current_state = create_team
                 elif current_state_output[0] == "Done" and current_state_output[1] == "Load Team":
                     current_state = main_menu
                 elif current_state_output[0] == "Done" and current_state_output[1] == "New Team":
                     current_state = create_team_menu
                 elif current_state_output[0] == "Save" and current_state_output[1] == "New Team":
+                    created_teams_data = SaveGame('saved_data/created_teams_data.json')
                     data = {
+                        "menu_item_data": create_team.menu_items_list[0].data["menu_item_data"],
+                        "menu_item_type": "Button",
+                        "menu_item_validation": "Text",
                         "id": datetime.datetime.now().strftime("%Y%m%d%H%M%S"),
-                        "Team Name": create_team.menu_items[0].data[0],
-                        "Location": create_team.menu_items[1].data[0],
-                        "Primary_Color": create_team.menu_items[2].data[0],
-                        "Secondary_Color": create_team.menu_items[3].data[0]
+                        "Team Name": create_team.menu_items_list[0].data["menu_item_data"],
+                        "Location": create_team.menu_items_list[1].data["menu_item_data"],
+                        "Primary_Color": create_team.menu_items_list[2].data["menu_item_data"],
+                        "Secondary_Color": create_team.menu_items_list[3].data["menu_item_data"]
                     }
                     created_teams_data.append_item_to_list(data)
 
