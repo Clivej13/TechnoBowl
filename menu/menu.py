@@ -30,15 +30,16 @@ class Menu:
                 if int(text_width) > menu_item_width:
                     menu_item_width = int(text_width) + (menu_item_spacing * 2)
 
+        menu_item_width += menu_item_spacing
+
         for menu_item_data in self.data["menu_items"]:
             if "height" in menu_item_data:
                 self.menu_surface_height += menu_item_data["height"] + menu_item_spacing
             else:
                 self.menu_surface_height += menu_item_height + menu_item_spacing
 
-        self.menu_surface_height += menu_item_spacing
-
-        previous_menu_item_rect_y = screen.get_rect().center[1] - (self.menu_surface_height / 2)
+        previous_menu_item_rect_y = screen.get_rect().center[1] - (self.menu_surface_height / 2) - (
+                    menu_item_spacing * 3)
         self.logger.log("previous_menu_item_rect_y" + str(previous_menu_item_rect_y))
         for i, menu_item_data in enumerate(self.data["menu_items"]):
             if "height" in menu_item_data:
@@ -67,7 +68,7 @@ class Menu:
                 display_box = DisplayBox(menu_item_rect, menu_item_data, data["menu_name"])
                 self.menu_items_list.append(display_box)
         self.menu_rect.height = self.menu_surface_height
-        self.menu_rect.width = menu_item_width
+        self.menu_rect.width = menu_item_width + menu_item_spacing
         self.menu_rect.center = screen.get_rect().center
         self.logger.log(self.data["menu_name"] + " - self.menu_rect: " + str(self.menu_rect))
         self.menu_surface = pygame.Surface((self.menu_rect.width, self.menu_rect.height))
