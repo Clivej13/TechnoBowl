@@ -24,7 +24,7 @@ class Button:
 
     def on_click(self):
         self.logger.log("Clicked button: " + str(self.data["menu_item_data"]) + " on " + self.menu_name)
-        return [self.data["menu_item_data"], self.menu_name]
+        return [self.data, self.menu_name]
 
     def update(self):
         if self.rect.collidepoint(pygame.mouse.get_pos()):

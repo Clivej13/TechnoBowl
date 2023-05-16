@@ -36,7 +36,6 @@ def main(self=None):
     create_team = Menu(screen, background_image, create_a_team_menu_data.load_all())
 
     current_state = main_menu  # start with the main menu
-
     # main game loop
     while True:
         pygame.time.delay(100)
@@ -46,49 +45,54 @@ def main(self=None):
                 sys.exit()
             current_state_output = current_state.handle_event(event)
             if current_state_output is not None:
-                if current_state_output[0] == "Main Menu" and current_state_output[1] == "Pause Menu":
+                if current_state_output[0]['menu_item_data'] == "Main Menu" and current_state_output[1] == "Pause Menu":
                     current_state = main_menu
-                elif current_state_output[0] == "New Game" and current_state_output[1] == "Main Menu":
+                elif current_state_output[0]['menu_item_data'] == "New Game" and current_state_output[1] == "Main Menu":
                     game = Game(screen, background_image)
                     current_state = game
-                elif current_state_output[0] == "Quit" and current_state_output[1] == "Main Menu":
+                elif current_state_output[0]['menu_item_data'] == "Quit" and current_state_output[1] == "Main Menu":
                     pygame.quit()
                     sys.exit()
-                elif current_state_output == "Pause":
+                elif current_state_output[0]['menu_item_data'] == "Pause":
                     current_state = pause_menu
-                elif current_state_output[0] == "Resume Game" and current_state_output[1] == "Pause Menu":
+                elif current_state_output[0]['menu_item_data'] == "Resume Game" and current_state_output[1] == "Pause Menu":
                     current_state = game
-                elif current_state_output[0] == "Create Team" and current_state_output[1] == "Main Menu":
+                elif current_state_output[0]['menu_item_data'] == "Create Team" and current_state_output[1] == "Main Menu":
                     current_state = create_team_menu
-                elif current_state_output[0] == "Main Menu" and current_state_output[1] == "Create Team":
+                elif current_state_output[0]['menu_item_data'] == "Main Menu" and current_state_output[1] == "Create Team":
                     current_state = main_menu
-                elif current_state_output[0] == "New Team" and current_state_output[1] == "Create Team":
+                elif current_state_output[0]['menu_item_data'] == "New Team" and current_state_output[1] == "Create Team":
                     current_state = create_team
-                elif current_state_output[0] == "Load Team" and current_state_output[1] == "Create Team":
+                elif current_state_output[0]['menu_item_data'] == "Load Team" and current_state_output[1] == "Create Team":
                     load_team_menu = load_team_data.load_all()
                     created_teams_data = SaveGame('saved_data/created_teams_data.json')
                     teams = created_teams_data.load_all()
                     for team in teams:
-                        load_team_menu["menu-items"].append(team)
+                        load_team_menu["menu_items"].append(team)
                     load_team = Menu(screen, background_image, load_team_menu)
                     current_state = load_team
-                elif current_state_output[0] != "Done" and current_state_output[1] == "Load Team":
+                elif current_state_output[0]['menu_item_data'] != "Done" and current_state_output[1] == "Load Team Menu":
                     delete_team_menu = delete_team_menu_data.load_all()
-                    delete_team_menu.append({"id": current_state_output[0][3]})
+                    logger.log("delete_team_menu: " + str(delete_team_menu))
+                    for menu_item in delete_team_menu["menu_items"]:
+                        menu_item["id"] = current_state_output[0]["id"]
                     delete_team = Menu(screen, background_image, delete_team_menu)
                     current_state = delete_team
-                elif current_state_output[0] == "Done" and current_state_output[1] == "Delete Team":
-                    current_state = load_team
-                elif current_state_output[0] == "Delete" and current_state_output[1] == "Delete Team":
-                    created_teams_data = SaveGame('saved_data/created_teams_data.json')
-                    created_teams_data.delete_item_from_list(current_state_output[3])
+                elif current_state_output[0]['menu_item_data'] == "Done" and current_state_output[1] == "Load Team Menu":
                     current_state = create_team_menu
-                elif current_state_output[0] == "Load" and current_state_output[1] == "Delete Team":
+                elif current_state_output[0]['menu_item_data'] == "Done" and current_state_output[1] == "Delete Team Menu":
+                    current_state = load_team
+                elif current_state_output[0]['menu_item_data'] == "Delete" and current_state_output[1] == "Delete Team Menu":
                     created_teams_data = SaveGame('saved_data/created_teams_data.json')
-                    data = created_teams_data.load_item_from_list(current_state_output[3])
+                    created_teams_data.delete_item_from_list(current_state_output[0]["id"])
+                    current_state = create_team_menu
+                elif current_state_output[0]['menu_item_data'] == "Load" and current_state_output[1] == "Delete Team Menu":
+                    logger.log("current_state_output[0]: " + str(current_state_output[0]))
+                    created_teams_data = SaveGame('saved_data/created_teams_data.json')
+                    data = created_teams_data.load_item_from_list(current_state_output[0]["id"])
                     logger.log(str(data))
                     create_team_data = create_a_team_menu_data.load_all()
-                    for menu_item in create_team_data["menu-items"]:
+                    for menu_item in create_team_data["menu_items"]:
                         if menu_item["menu_item_data"] == "Team Name":
                             menu_item["menu_item_value"] = data["Team Name"]
                         if menu_item["menu_item_data"] == "Team Location":
@@ -100,11 +104,11 @@ def main(self=None):
                     create_team = Menu(screen, background_image, create_team_data)
                     # created_teams_data.delete_item_from_list(current_state_output[0][3])
                     current_state = create_team
-                elif current_state_output[0] == "Done" and current_state_output[1] == "Load Team":
+                elif current_state_output[0]['menu_item_data'] == "Done" and current_state_output[1] == "Load Team":
                     current_state = main_menu
-                elif current_state_output[0] == "Done" and current_state_output[1] == "New Team":
+                elif current_state_output[0]['menu_item_data'] == "Done" and current_state_output[1] == "New Team":
                     current_state = create_team_menu
-                elif current_state_output[0] == "Save" and current_state_output[1] == "New Team":
+                elif current_state_output[0]['menu_item_data'] == "Save" and current_state_output[1] == "New Team":
                     created_teams_data = SaveGame('saved_data/created_teams_data.json')
                     data = {
                         "menu_item_data": create_team.menu_items_list[0].data["menu_item_data"],

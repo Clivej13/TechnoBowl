@@ -41,7 +41,7 @@ class Game:
                         self.logger.log("Space")
                     if event.key == pygame.K_ESCAPE:
                         self.logger.log("Pause")
-                        return "Pause"
+                        return [{'menu_item_data': "Pause"}]
                 if event.type == pygame.KEYUP:
                     if event.key == pygame.K_LEFT:
                         sprite.set_movement(0, 0, 1, False)

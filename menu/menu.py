@@ -21,6 +21,7 @@ class Menu:
         self.logger = Logger()
 
         for menu_item_data in self.data["menu_items"]:
+            self.logger.log(menu_item_data)
             if "width" in menu_item_data:
                 if menu_item_data["width"] > menu_item_width:
                     menu_item_width = menu_item_data["width"]
