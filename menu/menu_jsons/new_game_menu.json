@@ -1,0 +1,17 @@
+{
+  "menu_name": "New Game",
+  "menu_items": [
+    {
+      "menu_item_data": "Quick Game",
+      "menu_item_type": "Button"
+    },
+    {
+      "menu_item_data": "Franchise",
+      "menu_item_type": "Button"
+    },
+    {
+      "menu_item_data": "Main Menu",
+      "menu_item_type": "Button"
+    }
+  ]
+}

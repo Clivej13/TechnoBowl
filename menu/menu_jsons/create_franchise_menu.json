@@ -1,0 +1,32 @@
+{
+  "menu_name": "Create Franchise",
+  "menu_items": [
+    {
+      "menu_item_value": "",
+      "menu_item_data": "League Size",
+      "menu_item_type": "Input Box",
+      "menu_item_validation": "Number"
+    },
+    {
+      "menu_item_value": "",
+      "menu_item_data": "Players on pitch",
+      "menu_item_type": "Input Box",
+      "menu_item_validation": "Number"
+    },
+    {
+      "menu_item_value": "",
+      "menu_item_data": "Roster Size",
+      "menu_item_type": "Input Box",
+      "menu_item_validation": "Number"
+    },
+    {
+      "menu_item_value": "Yes",
+      "menu_item_data": "Injury",
+      "menu_item_type": "Toggle Box"
+    },
+    {
+      "menu_item_data": "Main Menu",
+      "menu_item_type": "Button"
+    }
+  ]
+}
