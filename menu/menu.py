@@ -96,14 +96,14 @@ class Menu:
             for menu_item in self.menu_items_list:
                 if menu_item.active:
                     if event.key == pygame.K_RETURN and menu_item.incorrect_value():
-                        print(menu_item.data[0])
+                        print(menu_item.data)
                         menu_item.active = False
                     elif event.key == pygame.K_BACKSPACE:
-                        menu_item.data[0] = menu_item.data[0][:-1]
+                        menu_item.data["menu_item_value"] = menu_item.data["menu_item_value"][:-1]
                     else:
-                        menu_item.data[0] += event.unicode
+                        menu_item.data["menu_item_value"] += event.unicode
                     # Re-render the text.
-                    menu_item.txt_surface = pygame.font.Font(None, 32).render(menu_item.data[0], True, menu_item.color)
+                    menu_item.txt_surface = pygame.font.Font(None, 32).render(menu_item.data["menu_item_value"], True, menu_item.color)
 
         return None
 
