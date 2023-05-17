@@ -30,7 +30,7 @@ class InputBox:
         if not self.active:
             self.active = True
         self.display_text = self.data["menu_item_value"]
-        return [self.data, self.menu_name]
+        return [self.data, self.menu_name, self.incorrect]
 
     def update(self):
         if self.data["menu_item_value"] == "":
@@ -44,7 +44,6 @@ class InputBox:
             self.color = (255, 255, 255)
             if self.rect.collidepoint(pygame.mouse.get_pos()):
                 self.color = self.hover_color
-            self.display_text = self.data["menu_item_data"]
         if self.incorrect:
             self.color = (255, 0, 51)
             self.display_text = self.data["menu_item_data"]
@@ -63,14 +62,20 @@ class InputBox:
                 list_rgb = self.data["menu_item_value"].split(",")
                 if int(list_rgb[0]) > 0 or int(list_rgb[0]) < 255 and int(list_rgb[1]) > 0 or int(
                         list_rgb[1]) < 255 and int(list_rgb[2]) > 0 or int(list_rgb[2]) < 255:
+                    self.incorrect = False
                     return True
                 else:
                     self.incorrect = True
                     self.data["menu_item_value"] = ""
                     return False
             except Exception as e:
-                self.logger.log("Exception")
                 self.incorrect = True
                 self.data["menu_item_value"] = ""
                 return False
+        if self.data["menu_item_validation"] == "Text":
+            if self.data["menu_item_value"] == "":
+                self.incorrect = True
+                return False
+            else:
+                self.incorrect = False
         return True
