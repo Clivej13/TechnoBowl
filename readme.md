@@ -1,0 +1,1 @@
+Logger is accessed with an import and self.logger.log("string")

@@ -5,16 +5,18 @@ from menu.menu_items.input_box import InputBox
 from logger import Logger
 from menu.menu_items.display_box import DisplayBox
 from menu.menu_items.toggle_box import ToggleBox
+from save import SaveGame
 
 
 class Menu:
-    def __init__(self, screen, background_image, data):
+    def __init__(self, screen, background_image, json):
         self.screen = screen
         self.background_image = background_image
-        self.data = data
+        self.data = SaveGame(json).load_all()
         self.font = pygame.font.SysFont(None, 50)
         self.menu_items_list = []
         self.logger = Logger()
+        self.current_state_output = None
 
         menu_item_spacing = 20
         menu_item_width = 200
@@ -55,16 +57,16 @@ class Menu:
         for menu_item_data in self.data["menu_items"]:
             menu_item_rect = menu_item_data["menu_item_rect"]
             if menu_item_data["menu_item_type"] == "Button":
-                button = Button(menu_item_rect, menu_item_data, self.font, data["menu_name"])
+                button = Button(menu_item_rect, menu_item_data, self.font, self.data["menu_name"])
                 self.menu_items_list.append(button)
             if menu_item_data["menu_item_type"] == "Input Box":
-                input_box = InputBox(menu_item_rect, menu_item_data, self.font, data["menu_name"])
+                input_box = InputBox(menu_item_rect, menu_item_data, self.font, self.data["menu_name"])
                 self.menu_items_list.append(input_box)
             if menu_item_data["menu_item_type"] == "Display Box":
-                display_box = DisplayBox(menu_item_rect, menu_item_data, data["menu_name"])
+                display_box = DisplayBox(menu_item_rect, menu_item_data, self.data["menu_name"])
                 self.menu_items_list.append(display_box)
             if menu_item_data["menu_item_type"] == "Toggle Box":
-                display_box = ToggleBox(menu_item_rect, menu_item_data, self.font, data["menu_name"])
+                display_box = ToggleBox(menu_item_rect, menu_item_data, self.font, self.data["menu_name"])
                 self.menu_items_list.append(display_box)
 
         self.menu_rect = pygame.Rect(0, 0, menu_item_width + menu_item_spacing, self.menu_surface_height)
@@ -87,7 +89,7 @@ class Menu:
                         item.deselect()
                         item.incorrect_value()
                     button_clicked = menu_item.on_click()
-                    return button_clicked
+                    self.current_state_output = button_clicked
         if event.type == pygame.KEYDOWN:
             for menu_item in self.menu_items_list:
                 if menu_item.active:
@@ -97,11 +99,7 @@ class Menu:
                         menu_item.data["menu_item_value"] = menu_item.data["menu_item_value"][:-1]
                     else:
                         menu_item.data["menu_item_value"] += event.unicode
-                    menu_item.txt_surface = self.font.render(
-                        menu_item.data["menu_item_value"], True, menu_item.color
-                    )
-
-        return None
+                    menu_item.txt_surface = self.font.render(menu_item.data["menu_item_value"], True, menu_item.color)
 
     def update(self):
         for menu_item in self.menu_items_list:
