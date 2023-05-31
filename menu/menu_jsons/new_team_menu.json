@@ -1,5 +1,6 @@
 {
   "menu_name": "New Team",
+  "loaded": false,
   "menu_items": [
     {
       "menu_item_value": "",

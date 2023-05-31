@@ -28,4 +28,7 @@ class NewTeamMenu(Menu):
                     "Secondary_Color": self.menu_items_list[3].data["menu_item_value"]
                 }
                 created_teams_data.append_item_to_list(data)
+                temp_new_team = SaveGame('temp/new_team_menu.json').load_all()
+                if temp_new_team["loaded"]:
+                    created_teams_data.delete_item_from_list(temp_new_team["id"])
                 return CreateTeamMenu(self.screen, self.background_image, "menu/menu_jsons/create_team_menu.json")

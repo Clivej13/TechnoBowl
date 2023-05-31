@@ -38,4 +38,7 @@ class DeleteTeamMenu(Menu):
                         menu_item["menu_item_value"] = data["Primary_Color"]
                     if menu_item["menu_item_data"] == "Secondary Color":
                         menu_item["menu_item_value"] = data["Secondary_Color"]
-                NewTeamMenu(self.screen, self.background_image, "menu/menu_jsons/new_team_menu.json")
+                create_team_data["loaded"] = True
+                create_team_data["id"] = self.current_state_output[0]["id"]
+                SaveGame('temp/new_team_menu.json').save(create_team_data)
+                return NewTeamMenu(self.screen, self.background_image, "temp/new_team_menu.json")
