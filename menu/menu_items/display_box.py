@@ -19,9 +19,10 @@ class DisplayBox:
                              False, 6, False)
         self.sprite.scale(self.data["scale_factor"])
         self.incorrect = False
+        self.expandable = False
 
     def draw(self, surface):
-        pygame.draw.rect(surface, self.color, self.rect)
+        pygame.draw.rect(surface, self.color, self.rect, border_radius=10)
         self.sprite.draw(surface)
 
     def on_click(self):

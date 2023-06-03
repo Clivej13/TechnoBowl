@@ -16,10 +16,11 @@ class InputBox:
         self.data = data
         self.display_text = data["menu_item_value"]
         self.active = False
+        self.expandable = False
         self.logger = Logger()
 
     def draw(self, surface):
-        pygame.draw.rect(surface, self.color, self.rect)
+        pygame.draw.rect(surface, self.color, self.rect, border_radius=10)
         txt_surface = self.font.render(self.display_text, True, (0, 0, 0))
         # Blit the text.
         surface.blit(txt_surface, (self.rect.x + 5, self.rect.y + 5))

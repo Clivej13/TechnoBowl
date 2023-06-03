@@ -15,9 +15,10 @@ class Button:
         self.clicked_color = (100, 100, 100)
         self.active = False
         self.incorrect = False
+        self.expandable = False
 
     def draw(self, surface):
-        pygame.draw.rect(surface, self.color, self.rect)
+        pygame.draw.rect(surface, self.color, self.rect, border_radius=10)
         text_surface = self.font.render(self.data["menu_item_data"], True, (0, 0, 0))
         text_rect = text_surface.get_rect()
         text_rect.center = self.rect.center

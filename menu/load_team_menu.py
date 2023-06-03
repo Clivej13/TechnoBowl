@@ -18,8 +18,6 @@ class LoadTeamMenu(Menu):
                 for menu_item in delete_team_menu["menu_items"]:
                     menu_item["id"] = self.current_state_output[0]["id"]
                 SaveGame('temp/delete_team_menu.json').save(delete_team_menu)
-                delete_team = DeleteTeamMenu(self.screen, self.background_image, 'temp/delete_team_menu.json')
-                return delete_team
+                return DeleteTeamMenu(self.screen, self.background_image, 'temp/delete_team_menu.json')
             elif self.current_state_output[0]['menu_item_data'] == "Done" and self.current_state_output[1] == "Load Team Menu":
-                create_team_menu = CreateTeamMenu(self.screen, self.background_image, "menu/menu_jsons/create_team_menu.json")
-                return create_team_menu
+                return CreateTeamMenu(self.screen, self.background_image, "menu/menu_jsons/create_team_menu.json")

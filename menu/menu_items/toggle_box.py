@@ -15,6 +15,7 @@ class ToggleBox:
         self.active = False
         self.selected = False
         self.incorrect = False
+        self.expandable = False
 
     def draw(self, surface):
         pygame.draw.rect(surface, self.color, self.rect, border_radius=10)
@@ -48,4 +49,7 @@ class ToggleBox:
             self.color = (255, 255, 255)
 
     def deselect(self):
+        pass
+
+    def incorrect_value(self):
         pass

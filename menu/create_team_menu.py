@@ -17,7 +17,6 @@ class CreateTeamMenu(Menu):
             elif self.current_state_output[0]['menu_item_data'] == "New Team" and self.current_state_output[1] == "Create Team":
                 from menu.new_team_menu import NewTeamMenu
                 return NewTeamMenu(self.screen, self.background_image, "menu/menu_jsons/new_team_menu.json")
-                loaded = False
             elif self.current_state_output[0]['menu_item_data'] == "Load Team" and self.current_state_output[1] == "Create Team":
                 load_team_menu = SaveGame('menu/menu_jsons/load_team_menu.json').load_all()
                 created_teams_data = SaveGame('saved_data/created_teams_data.json').load_all()

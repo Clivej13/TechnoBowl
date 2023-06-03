@@ -1,6 +1,7 @@
 import pygame
 
 from menu.menu_items.button import Button
+from menu.menu_items.drop_down_box import DropDownBox
 from menu.menu_items.input_box import InputBox
 from logger import Logger
 from menu.menu_items.display_box import DisplayBox
@@ -26,6 +27,9 @@ class Menu:
         for menu_item_data in self.data["menu_items"]:
             if "width" in menu_item_data:
                 menu_item_width = max(menu_item_width, menu_item_data["width"])
+            elif "menu_item_value" in menu_item_data:
+                text_width, text_height = self.font.size(menu_item_data["menu_item_data"] + menu_item_data["menu_item_value"])
+                menu_item_width = max(menu_item_width, text_width + (menu_item_spacing * 2))
             else:
                 text_width, text_height = self.font.size(menu_item_data["menu_item_data"])
                 menu_item_width = max(menu_item_width, text_width + (menu_item_spacing * 2))
@@ -68,7 +72,12 @@ class Menu:
             if menu_item_data["menu_item_type"] == "Toggle Box":
                 display_box = ToggleBox(menu_item_rect, menu_item_data, self.font, self.data["menu_name"])
                 self.menu_items_list.append(display_box)
-
+            if menu_item_data["menu_item_type"] == "Drop Down":
+                display_box = DropDownBox(menu_item_rect, menu_item_data, self.font, self.data["menu_name"])
+                self.menu_items_list.append(display_box)
+        self.logger.log(self.menu_items_list)
+        self.menu_items_list = sorted(self.menu_items_list, key=lambda x: (x.active, x.expandable))
+        self.logger.log(self.menu_items_list)
         self.menu_rect = pygame.Rect(0, 0, menu_item_width + menu_item_spacing, self.menu_surface_height)
         self.menu_rect.center = screen.get_rect().center
         self.menu_surface = pygame.Surface((self.menu_rect.width, self.menu_rect.height))
@@ -78,6 +87,7 @@ class Menu:
     def draw(self):
         self.screen.blit(self.background_image, (0, 0))
         self.screen.blit(self.menu_surface, self.menu_rect)
+
         for menu_item in self.menu_items_list:
             menu_item.draw(self.screen)
 
