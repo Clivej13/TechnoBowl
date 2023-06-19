@@ -1,9 +1,11 @@
 import pygame
 from logger import Logger
+from menu.menu_items.menu_item import MenuItem
 
 
-class ToggleBox:
+class ToggleBox(MenuItem):
     def __init__(self, rect, data, font, menu_name):
+        super().__init__()
         self.logger = Logger()
         self.menu_name = menu_name
         self.rect = rect
@@ -47,9 +49,3 @@ class ToggleBox:
             self.color = self.hover_color
         else:
             self.color = (255, 255, 255)
-
-    def deselect(self):
-        pass
-
-    def incorrect_value(self):
-        pass

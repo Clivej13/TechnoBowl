@@ -3,6 +3,7 @@ import sys
 
 from logger import Logger
 from menu.main_menu import MainMenu
+from save import SaveGame
 
 
 def main(self=None):
@@ -11,9 +12,16 @@ def main(self=None):
     pygame.init()
 
     # create a screen
-    # screen = pygame.display.set_mode((1280, 720), pygame.FULLSCREEN)
-    screen = pygame.display.set_mode((1280, 720))
-    # screen = pygame.display.set_mode((1920, 1080))
+    try:
+        options = SaveGame('saved_data/options_menu.json').load_all()
+    except:
+        options = SaveGame('menu/menu_jsons/options_menu.json').load_all()
+    logger.log(str(options))
+    for menu_item in options["menu_items"]:
+        if menu_item["menu_item_data"] == "Resolution":
+            resolution = menu_item["menu_item_value"].split("x")
+            # screen = pygame.display.set_mode((int(resolution[0]), int(resolution[1])))
+            screen = pygame.display.set_mode((int(resolution[0]), int(resolution[1])), pygame.FULLSCREEN)
     pygame.display.set_caption("My Game")
 
     # load background image
@@ -35,6 +43,7 @@ def main(self=None):
 
         # update the display
         pygame.display.update()
+
 
 if __name__ == "__main__":
     main()

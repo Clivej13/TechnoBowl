@@ -1,11 +1,13 @@
 import pygame
 
 from logger import Logger
+from menu.menu_items.menu_item import MenuItem
 from sprite import Sprite
 
 
-class DisplayBox:
+class DisplayBox(MenuItem):
     def __init__(self, rect, data, menu_name):
+        super().__init__()
         self.logger = Logger()
         self.menu_name = menu_name
         self.rect = rect
@@ -24,15 +26,3 @@ class DisplayBox:
     def draw(self, surface):
         pygame.draw.rect(surface, self.color, self.rect, border_radius=10)
         self.sprite.draw(surface)
-
-    def on_click(self):
-        pass
-
-    def update(self):
-        pass
-
-    def deselect(self):
-        pass
-
-    def incorrect_value(self):
-        pass

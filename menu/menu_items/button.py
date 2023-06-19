@@ -1,10 +1,12 @@
 import pygame
 
 from logger import Logger
+from menu.menu_items.menu_item import MenuItem
 
 
-class Button:
+class Button(MenuItem):
     def __init__(self, rect, data, font, menu_name):
+        super().__init__()
         self.logger = Logger()
         self.menu_name = menu_name
         self.rect = rect
@@ -24,6 +26,10 @@ class Button:
         text_rect.center = self.rect.center
         surface.blit(text_surface, text_rect)
 
+    def handle_event(self, event):
+        button_clicked = self.on_click()
+        return button_clicked
+
     def on_click(self):
         return [self.data, self.menu_name]
 
@@ -32,9 +38,3 @@ class Button:
             self.color = self.hover_color
         else:
             self.color = (255, 255, 255)
-
-    def deselect(self):
-        pass
-
-    def incorrect_value(self):
-        pass

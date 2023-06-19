@@ -4,7 +4,7 @@ import logger
 
 class SaveGame:
     def __init__(self, filename):
-        self.Logger = logger.Logger()
+        self.logger = logger.Logger()
         self.filename = filename
 
     def save(self, data):

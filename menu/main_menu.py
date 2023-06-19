@@ -21,4 +21,7 @@ class MainMenu(Menu):
             elif self.current_state_output[0]['menu_item_data'] == "Create Team" and self.current_state_output[1] == "Main Menu":
                 return CreateTeamMenu(self.screen, self.background_image, "menu/menu_jsons/create_team_menu.json")
             elif self.current_state_output[0]['menu_item_data'] == "Options" and self.current_state_output[1] == "Main Menu":
-                return OptionsMenu(self.screen, self.background_image, "menu/menu_jsons/options_menu.json")
+                try:
+                    return OptionsMenu(self.screen, self.background_image, "saved_data/options_menu.json")
+                except:
+                    return OptionsMenu(self.screen, self.background_image, "menu/menu_jsons/options_menu.json")

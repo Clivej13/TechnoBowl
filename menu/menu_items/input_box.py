@@ -1,10 +1,12 @@
 import pygame
 
 from logger import Logger
+from menu.menu_items.menu_item import MenuItem
 
 
-class InputBox:
+class InputBox(MenuItem):
     def __init__(self, input_box_rect, data, font, menu_name):
+        super().__init__()
         self.incorrect = False
         self.logger = Logger()
         self.menu_name = menu_name
