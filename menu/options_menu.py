@@ -23,7 +23,7 @@ class OptionsMenu(Menu):
                 # apply change to resolution.
                 resolution = self.current_state_output[0]["menu_item_data"].split("x")
                 self.logger.log(str(resolution[0]) + " x " + str(resolution[1]))
-                pygame.display.set_mode((int(resolution[0]), int(resolution[1])), pygame.FULLSCREEN)
+                screen = pygame.display.set_mode((int(resolution[0]), int(resolution[1])), pygame.FULLSCREEN)
                 self.screen.fill((255, 255, 255))
                 self.clear_screen()
                 self.calculate_menu()
