@@ -12,10 +12,7 @@ def main(self=None):
     pygame.init()
 
     # create a screen
-    try:
-        options = SaveGame('saved_data/options_menu.json').load_all()
-    except:
-        options = SaveGame('menu/menu_jsons/options_menu.json').load_all()
+    options = SaveGame('saved_data/options_menu.json',SaveGame('menu/menu_jsons/options_menu.json').load_all()).load_all()
     logger.log(str(options))
     for menu_item in options["menu_items"]:
         if menu_item["menu_item_data"] == "Resolution":

@@ -12,7 +12,6 @@ class OptionsMenu(Menu):
     # ...
 
     def check_state_transition(self):
-        self.logger.log(str(self.current_state_output))
         if self.current_state_output is not None:
             SaveGame('temp/options_menu.json').save(SaveGame(self.json).load_all())
             if self.current_state_output[0]['menu_item_data'] == "Main Menu":

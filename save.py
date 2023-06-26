@@ -1,11 +1,17 @@
 import json
+import os
+
 import logger
 
 
 class SaveGame:
-    def __init__(self, filename):
+    def __init__(self, filename, data={}):
         self.logger = logger.Logger()
         self.filename = filename
+
+        if not os.path.isfile(filename):
+            with open(filename, 'w') as file:
+                json.dump(data, file)
 
     def save(self, data):
         with open(self.filename, 'w') as f:
